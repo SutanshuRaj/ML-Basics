@@ -21,7 +21,7 @@ class LinearRegression():
 		self.weights = np.zeros(n_features)
 		self.bias = 0
 
-		# Gradiet Descent.
+		# Gradient Descent.
 		for _ in range(self.n_iters):
 			y_predicted = np.dot(X, self.weights) + self.bias
 
@@ -56,4 +56,3 @@ if __name__ == '__main__':
 	fig = plt.figure(figsize=(8, 6))
 	plt.scatter(y_test, predictions, color=cmap(0.9), s=10, label="Prediction")
 	plt.show()
-	

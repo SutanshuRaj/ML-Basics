@@ -20,11 +20,11 @@ class NaiveBayes():
 		self._var = np.zeros((n_classes, n_features), dtype=np.float64)
 		self._priors = np.zeros(n_classes, dtype=np.float64)
 
-		for idx, c in enumerate(self._classes):
-			X_c = X[y == c]
-			self._mean[idx, : ] = X_c.mean(axis=0)
-			self._var[idx, :] = X_c.var(axis=0)
-			self._priors[idx] = X_c.shape[0] / float(n_samples)
+		for c in self._classes:
+			X_c = X[c == y]
+			self._mean[c, : ] = X_c.mean(axis=0)
+			self._var[c, :] = X_c.var(axis=0)
+			self._priors[c] = X_c.shape[0] / float(n_samples)
 
 
 	def predict(self, X):
@@ -38,8 +38,8 @@ class NaiveBayes():
 		# Calculate Posterior Probability
 		for idx, c in enumerate(self._classes):
 			prior = np.log(self._priors[idx])
-			posterior = np.sum(np.log(self._pdf(idx, x)))
-			posterior = prior + posterior
+			conditional = np.sum(np.log(self._pdf(idx, x)))
+			posterior = prior + conditional
 			posteriors.append(posterior)
 
 		return self._classes[np.argmax(posteriors)]
@@ -63,5 +63,4 @@ if __name__ == '__main__':
 	predictions = clf.predict(X_test)
 
 	print("Naive Bayes classification Accuracy is: ", accuracy(y_test, predictions))
-	
-	
+
