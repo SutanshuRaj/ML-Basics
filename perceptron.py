@@ -53,3 +53,21 @@ if __name__ == '__main__':
 	predictions = clf.predict(X_test)
 
 	print("Perceptron Classification Accuracy is: ", accuracy(y_test, predictions))
+
+	fig = plt.figure()
+	ax = fig.add_subplot(1, 1, 1)
+	plt.scatter(X_train[:, 0], X_train[:, 1], marker="o", c=y_train)
+
+	x0_1 = np.amin(X_train[:, 0])
+	x0_2 = np.amax(X_train[:, 0])
+
+	x1_1 = (-clf.weights[0] * x0_1 - clf.bias) / clf.weights[1]
+	x1_2 = (-clf.weights[0] * x0_2 - clf.bias) / clf.weights[1]
+
+	ax.plot([x0_1, x0_2], [x1_1, x1_2], "k")
+
+	ymin = np.amin(X_train[:, 1])
+	ymax = np.amax(X_train[:, 1])
+	ax.set_ylim([ymin - 3, ymax + 3])
+
+	plt.show()
